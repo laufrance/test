@@ -5,7 +5,7 @@ services:
     build: .
     container_name: classconnect-api
     ports:
-      - "${PORT:-6969}:${PORT:-6969}"
+      - "6969:6969"
     environment:
       - HOST=${HOST:-0.0.0.0}
       - PORT=${PORT:-6969}

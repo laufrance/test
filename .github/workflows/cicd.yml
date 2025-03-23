@@ -53,12 +53,6 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Increase Docker memory limit
-        run: |
-          sudo sysctl -w vm.overcommit_memory=1
-          sudo sysctl -w fs.inotify.max_user_watches=524288
-          sudo sysctl -w fs.inotify.max_user_instances=512
-
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
@@ -67,18 +61,22 @@ jobs:
       - name: Install Docker Compose
         run: sudo apt-get update && sudo apt-get install -y docker-compose
 
-      - name: Stop Docker2
-        run: docker-compose down
-
       - name: Set environment variables
-        env:
-          HOST: "0.0.0.0"
-          PORT: "6969"
-          ENVIRONMENT: "production"
-        run: echo "HOST=$HOST\nPORT=$PORT\nENVIRONMENT=$ENVIRONMENT" >> .env
+        run: echo -e "HOST=0.0.0.0\nPORT=6969\nENVIRONMENT=production" > .env
 
       - name: Run API container
         run: docker-compose up -d
+
+      - name: Wait for API to be ready
+        run: |
+          for i in {1..10}; do
+            if curl -s http://0.0.0.0:6969/courses; then
+              echo "API is ready"
+              break
+            fi
+            echo "Waiting for API..."
+            sleep 5
+          done
 
       - name: Run tests
         run: python tests/e2etesting.py 0.0.0.0 6969

@@ -11,6 +11,7 @@ PORT = int(sys.argv[2]) if len(sys.argv) > 2 else int(os.getenv("PORT", 8080))
 
 class TestClassConnectAPI(unittest.TestCase):
     BASE_URL = f"http://{HOST}:{PORT}/courses"
+    print(BASE_URL)
 
     def test_create_course(self):
         """
