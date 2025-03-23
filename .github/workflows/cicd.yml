@@ -61,11 +61,18 @@ jobs:
       - name: Install Docker Compose
         run: sudo apt-get update && sudo apt-get install -y docker-compose
 
+      - name: Set environment variables
+        env:
+          HOST: "0.0.0.0"
+          PORT: "6969"
+          ENVIRONMENT: "production"
+        run: echo "HOST=$HOST\nPORT=$PORT\nENVIRONMENT=$ENVIRONMENT" >> .env
+
       - name: Run API container
         run: docker-compose up -d
 
       - name: Run tests
-        run: python tests/e2etesting.py 0.0.0.0 8080
+        run: python tests/e2etesting.py 0.0.0.0 6969
 
       - name: Stop Docker
         run: docker-compose down
