@@ -80,6 +80,9 @@ jobs:
             sleep 3
           done || { echo "API did not start in time"; exit 1; }
 
+      - name: Run tests inside the container
+        run: sudo docker exec -it classconnect-api python tests/e2etesting.py 0.0.0.0 6969
+
       - name: Run tests
         run: python tests/e2etesting.py 0.0.0.0 6969
 
