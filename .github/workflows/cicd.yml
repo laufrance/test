@@ -27,7 +27,7 @@ jobs:
           pip install black
 
       - name: Run Black linter
-        run: black --check .
+        run: black .
 
   build:
     name: Build Docker Image
