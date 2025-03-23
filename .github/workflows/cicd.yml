@@ -37,8 +37,9 @@ jobs:
       - name: Checkout repo
         uses: actions/checkout@v3
 
-      - name: Build Docker image
+      - name: Shut down docker if already running
         run: sudo docker-compose down
+      - name: Build Docker
         run: sudo docker-compose build 
 
   test:
