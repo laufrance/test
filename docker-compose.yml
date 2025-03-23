@@ -10,4 +10,9 @@ services:
       - HOST=${HOST:-0.0.0.0}
       - PORT=${PORT:-8080}
       - ENVIRONMENT=${ENVIRONMENT:-development}
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 512M
     restart: always

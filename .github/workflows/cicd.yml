@@ -53,6 +53,12 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Increase Docker memory limit
+        run: |
+          sudo sysctl -w vm.overcommit_memory=1
+          sudo sysctl -w fs.inotify.max_user_watches=524288
+          sudo sysctl -w fs.inotify.max_user_instances=512
+          
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
