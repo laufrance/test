@@ -78,7 +78,7 @@ jobs:
         run: echo "HOST=$HOST\nPORT=$PORT\nENVIRONMENT=$ENVIRONMENT" >> .env
 
       - name: Run API container
-        run: docker-compose up
+        run: docker-compose up -d
 
       - name: Run tests
         run: python tests/e2etesting.py 0.0.0.0 6969
