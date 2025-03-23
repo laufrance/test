@@ -38,7 +38,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Build Docker image
-        run: docker build -t classconnect-api
+        run: docker build -t classconnect-api .
 
   test:
     name: Run Tests
