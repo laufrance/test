@@ -71,17 +71,8 @@ jobs:
       - name: Run API container
         run: docker-compose up -d
 
-      - name: Wait for API to be ready
-        run: |
-          echo "Waiting for API to be ready..."
-          for i in {1..10}; do
-            curl --silent --fail http://0.0.0.0:6969/courses && break
-            echo "API not ready yet... retrying in 3s"
-            sleep 3
-          done || { echo "API did not start in time"; exit 1; }
-
       - name: Run tests inside the container
-        run: sudo docker exec -it classconnect-api python tests/e2etesting.py 0.0.0.0 6969
+        run: sudo docker exec classconnect-api python tests/e2etesting.py 0.0.0.0 6969
 
       - name: Run tests
         run: python tests/e2etesting.py 0.0.0.0 6969
