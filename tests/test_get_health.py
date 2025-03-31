@@ -4,6 +4,7 @@ from app.main import app
 
 client = TestClient(app)
 
+
 def test_get_health():
     """Prueba que devuelva status ok el endpoint health"""
 
