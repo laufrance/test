@@ -1,6 +1,9 @@
 # 104048-TP0-20251C-9521
 Repositorio para el TP0 de la materia Metodos y Modelos de la Ingenieria de Software 2 (9521) - FIUBA
 
+![Coverage](https://codecov.io/gh/laufrance/test/branch/main/graph/badge.svg)
+
+
 ## Tabla de Contenidos
 1. [Introducción](#introducción)
 2. [Desafíos mas complicados del Proyecto](#desafíos-mas-complicados-del-proyecto)
