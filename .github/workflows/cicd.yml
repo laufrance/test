@@ -80,9 +80,9 @@ jobs:
 
       - name: Extract coverage percentage
         run: |
-          COVERAGE=$(grep -oP 'line-rate="\K[0-9.]+' coverage.xml | awk '{print $1*100}')
+          COVERAGE=$(grep -oP 'line-rate="\K[0-9.]+' coverage.xml | awk '{print $1*100}' | head -n1 | tr -d '\n')
           echo "Coverage: $COVERAGE%"
-          sed -i "s/\(Coverage: \)[0-9.]*%/\1$COVERAGE%/" README.md
+          sed -i "s/Coverage: [0-9.]*%/Coverage: $COVERAGE%/" README.md  
 
       - name: Commit and push changes
         run: |
