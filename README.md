@@ -1,117 +1,60 @@
-# 104048-TP0-20251C-9521
-Repositorio para el TP0 de la materia Metodos y Modelos de la Ingenieria de Software 2 (9521) - FIUBA
+# ClassConnect Template Service
 
-![Coverage](https://codecov.io/gh/laufrance/test/branch/main/graph/badge.svg)
+## Tabla de Contenido
+1. Introduccion
+2. Requisitos Previos
+3. Requisitos
+4. Instalacion
+5. Run
+6. FastAPI Links
+7. Pytest Links
 
+## Introduccion
+Bienvenido a ClassConnect!
 
-## Tabla de Contenidos
-1. [Introducción](#introducción)
-2. [Desafíos mas complicados del Proyecto](#desafíos-mas-complicados-del-proyecto)
-3. [Pre-requisitos](#pre-requisitos)
-4. [Formatting](#formatting)
-5. [.env file](#archivo-env)
-6. [Construcción de la imagen Docker](#construcción-de-la-imagen-docker)
-7. [Ejecución del servicio Docker](#ejecución-del-servicio-docker)
-8. [Guía de Pruebas](#guía-de-pruebas)
+En nuestra plataforma de aprendizaje de la proxima generacion
+podras crear, editar y eliminar tus cursos como mejor te parezca.
+Cada curso tendra titulo y descripcion y podras consultarlos cuando gustes!
 
----
+## Requisitos Previos
+- Python 3
+- Docker
 
-## Introducción
-Este proyecto implementa una API REST-like para la gestión de cursos, siguiendo el diseño "Package by Layer Design" con capas: **Controller**, **Service**, **Router**, **Repository** y **Testing**. La API permite crear, listar, obtener y eliminar cursos, validando las entradas y utilizando una base de datos SQLite.
+## Requisitos (incluidos en el Dockerfile)
+- FastAPI: Framework para contruir la API.
+- Uvicorn: Servidor para ejecutar FastAPI.
+- Pydantic: Manejar y validar modelos de datos usados.
+- Pytest: Framewor de testing de Python.
 
----
-
-## Desafíos mas complicados del Proyecto
-- Reestructuración a **Package by Layer Design** para mantener el código limpio y modular.
-- Dockerización completa del backend con base de datos local en sqlite.
-- Validación de la longitud de la descripción entre **50 y 255 caracteres**.
-
----
-
-## Pre-requisitos
-Para levantar el entorno de desarrollo, necesitarás:
-
-- **Python 3.11 o superior**
-```
-sudo apt install python3
-```
-- **Pip**  
-```
-sudo apt-get install python3-pip
-```
-- **Docker**
-```
-sudo apt-get install docker.io
+Se pueden instalar localmente en caso de no usar el Dockerfile:
+```sh
+pip install -r requirements.txt
 ```
 
-- **Docker Compose**
-```
-sudo apt-get install docker-compose
-```
-
----
-
-## Formatting
-
-Para el formateo del codigo se uso la libreria Black. Se corrió el siguiente comando:
-```
-black .
+## Instalacion
+1. Clonar el Repo:
+```sh
+git clone https://github.com/florenciavillar/template-service.git
+cd  template-service
 ```
 
-
----
-## Archivo .env
-Se debe crear un archivo .env con el mismo formato que el archivo .env.example
-```
-HOST=0.0.0.0
-PORT=5000
-ENVIRONMENT=development
-```
-Aqui se van a definir las variables de entorno a utilizarse, Host, Port y Environment.
-
----
-
-## Construcción de la imagen Docker
-
-Desde la raíz del proyecto, ejecuta:
-
-```
-sudo docker-compose down
-sudo docker-compose build
+2. Crear el env development a partir del example:
+```sh
+cp .env.example .env.development
 ```
 
----
-
-## Ejecución del servicio Docker
-
-Para levantar la API en el contenedor:
-
-```
-sudo docker-compose up
+## Run
+```sh
+docker-compose up --build
 ```
 
-Luego, la API estará disponible en (Si el host elegido en el archivo .env es localhost y el puerto es 5000):
-[http://localhost:5000](http://localhost:5000)
+## FastAPI Links
+Puedes probar endpoints en FastAPI
 
-Si se elige otro host y otro puerto la ip seria _http://host:puerto_
+http://localhost:8080/docs#/
 
----
+Ver mas documentacion de endpoints aca! http://localhost:8080/redoc
 
-## Guía de Pruebas
-
-Las pruebas E2E están implementadas con la librería unittest (de Python).
-Link a la documentación oficial: [unittest Documentation](https://docs.python.org/3/library/unittest.html)
-
-Para correr los tests dentro del docker:
-
-```
-sudo docker exec -it 104048-tp0-20251c-9521_api_1 python tests/e2etesting.py 0.0.0.0 5000
-```
-_--host --port_
-
-Para correr los tests fuera del docker:
-
-```
-python3 tests/e2etesting.py 0.0.0.0 5000
-```
-_--host --port_
+## Pytest Links
+user-guide: https://docs.pytest.org/en/stable/how-to/index.html
+fixture: https://docs.pytest.org/en/stable/reference/fixtures.html#fixtures

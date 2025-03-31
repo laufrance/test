@@ -1,1 +1,3 @@
-.venv
+# Ignorar archivos de configuración de entorno
+.env.development
+.env.production

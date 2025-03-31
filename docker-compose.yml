@@ -1,18 +1,11 @@
-version: '3'
+version: '3.8'
 
 services:
-  api:
+  app:
     build: .
-    container_name: classconnect-api
     ports:
-      - "6969:6969"
-    environment:
-      - HOST=${HOST:-0.0.0.0}
-      - PORT=${PORT:-6969}
-      - ENVIRONMENT=${ENVIRONMENT:-development}
-    deploy:
-      resources:
-        limits:
-          cpus: "1.0"
-          memory: 512M
-    restart: always
+      - "8080:8080"
+    volumes:
+      - .:/app
+    env_file:
+      - .env.development
