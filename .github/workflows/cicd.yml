@@ -45,6 +45,7 @@ jobs:
 
       - name: Copy environment variables
         run: cp .env.example .env.development
+          cp .env.development /home/runner/work/test/test/.env.development
 
       - name: Print working directory
         run: pwd
