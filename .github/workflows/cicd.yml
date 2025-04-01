@@ -78,19 +78,20 @@ jobs:
         with:
           name: coverage-report
 
-      - name: Generate coverage summary
-        id: coverage-summary
-        uses: irongut/CodeCoverageSummary@v1.3.0
-        with:
-          filename: coverage.xml
-          badge: true
+      - name: Extract coverage percentage
+        id: extract-coverage
+        run: |
+          COVERAGE=$(grep -oP 'line-rate="\K[0-9.]+' coverage.xml | awk '{print $1*100}' | head -n1 | tr -d '\n')
+          echo "COVERAGE=$COVERAGE" >> $GITHUB_ENV
 
-      - name: List files in workspace
-        run: ls -la
+      - name: Generate badge URL
+        run: |
+          BADGE_URL="https://img.shields.io/badge/Coverage-${COVERAGE}%25-brightgreen"
+          echo "Generated Badge URL: $BADGE_URL"
+          echo "BADGE_URL=$BADGE_URL" >> $GITHUB_ENV
 
       - name: Update README with badge
         run: |
-          BADGE_URL=$(cat coverage-badge-url.txt)
           sed -i "s|!\[Coverage\](.*)|![Coverage](${BADGE_URL})|" README.md
 
       - name: Commit and push changes
@@ -101,4 +102,4 @@ jobs:
           git config --global user.email "github-actions@github.com"
           git add README.md
           git commit -m "Update coverage badge in README" || echo "No changes to commit"
-          git push
+          git push https://x-access-token:${GITHUB_TOKEN}@github.com/${{ github.repository }} HEAD:${{ github.ref_name }}
