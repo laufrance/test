@@ -85,7 +85,8 @@ jobs:
           echo "COVERAGE=$COVERAGE" >> $GITHUB_ENV
 
       - name: Debug coverage value
-        run: echo "Extracted coverage: $COVERAGE"
+        run: |
+          echo "Extracted coverage: $COVERAGE"
 
       - name: Update README with badge
         run: |
