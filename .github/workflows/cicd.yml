@@ -78,13 +78,8 @@ jobs:
         with:
           name: coverage-report
 
-      - name: Extract coverage percentage
-        id: extract-coverage
-        run: |
-          COVERAGE=$(grep -oP 'line-rate="\K[0-9.]+' coverage.xml | awk '{print $1*100}' | head -n1 | tr -d '\n')
-          echo "COVERAGE=$COVERAGE" >> $GITHUB_ENV
-
-      - name: Generate dynamic badge URL
-        run: |
-          BADGE_URL="https://img.shields.io/badge/Coverage-${COVERAGE}%25-brightgreen"
-          echo "Dynamic badge URL: $BADGE_URL"
+      - name: Generate coverage summary
+        uses: irongut/CodeCoverageSummary@v2
+        with:
+          filename: coverage.xml
+          badge: true
