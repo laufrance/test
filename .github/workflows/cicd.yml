@@ -92,3 +92,6 @@ jobs:
         run: |
           BADGE_URL="https://img.shields.io/badge/Coverage-${COVERAGE}%25-brightgreen"
           sed -i "s|!\[Coverage\](https://img.shields.io/badge/Coverage-[0-9]*%25-brightgreen)|![Coverage](${BADGE_URL})|" README.md
+
+      - name: Debug README content
+        run: cat README.md
