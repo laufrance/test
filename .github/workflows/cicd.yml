@@ -45,19 +45,6 @@ jobs:
 
       - name: Copy environment variables
         run: cp .env.example .env.development
-          cp .env.development /home/runner/work/test/test/.env.development
-
-      - name: Print working directory
-        run: pwd
-
-      - name: List files in workspace
-        run: ls -la
-
-      - name: Upload .env.development as artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: env-file
-          path: /home/runner/work/test/test/.env.development
 
       - name: Start Docker services
         run: docker-compose up -d
@@ -108,15 +95,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Download .env.development artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: env-file
-
       - name: Install Docker Compose
         run: |
           sudo apt-get update
           sudo apt-get install -y docker-compose
+
+      - name: Recreate .env.development file
+        run: |
+          cp .env.example .env.development
 
       - name: Stop Docker services
         run: docker-compose down
