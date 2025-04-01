@@ -84,14 +84,7 @@ jobs:
           COVERAGE=$(grep -oP 'line-rate="\K[0-9.]+' coverage.xml | awk '{print $1*100}' | head -n1 | tr -d '\n')
           echo "COVERAGE=$COVERAGE" >> $GITHUB_ENV
 
-      - name: Debug coverage value
-        run: |
-          echo "Extracted coverage: $COVERAGE"
-
-      - name: Update README with badge
+      - name: Generate dynamic badge URL
         run: |
           BADGE_URL="https://img.shields.io/badge/Coverage-${COVERAGE}%25-brightgreen"
-          sed -i "s|!\[Coverage\](https://img.shields.io/badge/Coverage-[0-9]*%25-brightgreen)|![Coverage](${BADGE_URL})|" README.md
-
-      - name: Debug README content
-        run: cat README.md
+          echo "Dynamic badge URL: $BADGE_URL"
