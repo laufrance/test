@@ -1,5 +1,7 @@
 # ClassConnect Template Service
 
+![Coverage](https://img.shields.io/badge/Coverage-0%25-brightgreen)
+
 ## Tabla de Contenido
 1. Introduccion
 2. Requisitos Previos

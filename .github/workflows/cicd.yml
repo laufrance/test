@@ -79,17 +79,12 @@ jobs:
           name: coverage-report
 
       - name: Extract coverage percentage
+        id: extract-coverage
         run: |
           COVERAGE=$(grep -oP 'line-rate="\K[0-9.]+' coverage.xml | awk '{print $1*100}' | head -n1 | tr -d '\n')
-          echo "Coverage: $COVERAGE%"
-          sed -i "s/Coverage: [0-9.]*%/Coverage: $COVERAGE%/" README.md  
+          echo "COVERAGE=$COVERAGE" >> $GITHUB_ENV
 
-      - name: Commit and push changes
-        env:
-          GH_PAT: ${{ secrets.GH_PAT }}
+      - name: Update README with badge
         run: |
-          git config --global user.name 'github-actions'
-          git config --global user.email 'github-actions@github.com'
-          git add README.md
-          git commit -m "Update coverage in README" || echo "No changes to commit"
-          git push https://x-access-token:${GH_PAT}@github.com/laufrance/test.git HEAD:main
+          BADGE_URL="https://img.shields.io/badge/Coverage-${COVERAGE}%25-brightgreen"
+          sed -i "s|!\[Coverage\](.*)|![Coverage](${BADGE_URL})|" README.md
