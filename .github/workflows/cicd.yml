@@ -84,6 +84,9 @@ jobs:
           COVERAGE=$(grep -oP 'line-rate="\K[0-9.]+' coverage.xml | awk '{print $1*100}' | head -n1 | tr -d '\n')
           echo "COVERAGE=$COVERAGE" >> $GITHUB_ENV
 
+      - name: Debug coverage value
+        run: echo "Extracted coverage: $COVERAGE"
+
       - name: Update README with badge
         run: |
           BADGE_URL="https://img.shields.io/badge/Coverage-${COVERAGE}%25-brightgreen"
