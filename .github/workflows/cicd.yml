@@ -45,7 +45,7 @@ jobs:
 
       - name: Copy environment variables
         run: cp .env.example .env.development
-      
+
       - name: List files in workspace
         run: ls -la
 
@@ -53,7 +53,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: env-file
-          path: .env.development
+          path: ${{ github.workspace }}/.env.development
 
       - name: Start Docker services
         run: docker-compose up -d
