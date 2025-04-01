@@ -79,7 +79,23 @@ jobs:
           name: coverage-report
 
       - name: Generate coverage summary
+        id: coverage-summary
         uses: irongut/CodeCoverageSummary@v1.3.0
         with:
           filename: coverage.xml
           badge: true
+
+      - name: Update README with badge
+        run: |
+          BADGE_URL=$(cat coverage-badge-url.txt)
+          sed -i "s|!\[Coverage\](.*)|![Coverage](${BADGE_URL})|" README.md
+
+      - name: Commit and push changes
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git add README.md
+          git commit -m "Update coverage badge in README" || echo "No changes to commit"
+          git push
