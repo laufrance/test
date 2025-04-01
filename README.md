@@ -2,6 +2,9 @@
 
 ![Coverage](https://img.shields.io/badge/Coverage-0%25-brightgreen)
 
+
+[![CI/CD Pipeline](https://github.com/laufrance/test/actions/workflows/cicd.yml/badge.svg)](https://github.com/laufrance/test/actions/workflows/cicd.yml)
+
 ## Tabla de Contenido
 1. Introduccion
 2. Requisitos Previos
