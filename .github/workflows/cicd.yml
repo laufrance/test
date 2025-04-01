@@ -85,6 +85,9 @@ jobs:
           filename: coverage.xml
           badge: true
 
+      - name: List files in workspace
+        run: ls -la
+
       - name: Update README with badge
         run: |
           BADGE_URL=$(cat coverage-badge-url.txt)
