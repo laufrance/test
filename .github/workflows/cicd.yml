@@ -31,9 +31,33 @@ jobs:
       - name: Run black
         run: black --check app tests
 
-  test:
+  start-docker:
     runs-on: ubuntu-latest
     needs: lint
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Copy environment variables
+        run: cp .env.example .env
+
+      - name: Start Docker services
+        run: docker-compose up -d
+
+      - name: Wait for API to be ready
+        run: |
+          for i in {1..10}; do
+            if curl -s http://localhost:8080/health; then
+              echo "API is ready"
+              break
+            fi
+            echo "Waiting for API..."
+            sleep 5
+          done
+
+  test:
+    runs-on: ubuntu-latest
+    needs: start-docker
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -51,7 +75,7 @@ jobs:
 
       - name: Run tests with coverage
         run: |
-          PYTHONPATH=. pytest --cov=app --cov-report=term-missing --cov-report=xml
+          PYTHONPATH=. pytest --cov=app --cov=tests --cov-report=term-missing --cov-report=xml
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v4
@@ -59,19 +83,16 @@ jobs:
           name: coverage-report
           path: coverage.xml
 
-  docker:
+  stop-docker:
     runs-on: ubuntu-latest
     needs: test
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Build Docker image
-        run: docker build -t myapp:latest .
+      - name: Stop Docker services
+        run: docker-compose down
 
   update-readme:
     runs-on: ubuntu-latest
-    needs: test
+    needs: stop-docker
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
