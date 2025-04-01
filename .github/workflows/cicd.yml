@@ -45,6 +45,9 @@ jobs:
 
       - name: Copy environment variables
         run: cp .env.example .env.development
+      
+      - name: List files in workspace
+        run: ls -la
 
       - name: Upload .env.development as artifact
         uses: actions/upload-artifact@v4
